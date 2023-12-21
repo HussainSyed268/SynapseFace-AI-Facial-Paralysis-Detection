@@ -4,7 +4,10 @@ module.exports = {
 
   theme: {
     extend: {
-      fontFamily: ["Poppins", "sans-serif"],
+      fontFamily: {
+        poppins: ["Poppins", "sans-serif"],
+        worksans: ["Work Sans", "sans-serif"],
+      },
     },
   },
   plugins: [require("daisyui")],
