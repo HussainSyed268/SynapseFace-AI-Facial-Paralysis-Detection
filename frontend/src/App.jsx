@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+const AppLayout = React.lazy(() => import("./Layout.jsx"));
+const Page404 = React.lazy(() => import("./views/Page404.jsx"));
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+      <div className="flex flex-col min-h-screen">
+        <BrowserRouter>
+          <Routes>
+            <Route path="/404" element={<Page404 />} />
+            <Route path="*" element={<AppLayout />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </div>);
 }
 
 export default App;

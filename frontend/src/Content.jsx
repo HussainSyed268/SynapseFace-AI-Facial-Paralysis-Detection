@@ -1,14 +1,14 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Home from "./components/Home";
+// import Home from "./components/Home";
 export default function AppContent() {
     return (
         <>
             <div
-                className="flex justify-center items-center h-[92vh]"
+                className="flex justify-center items-center h-[90vh]"
             >
                 <Routes>
-                    <Route key={"home"} path={"/"} element={<Home />} />
+                    {/* <Route key={"home"} path={"/"} element={<Home />} /> */}
 
                 </Routes>
             </div>
