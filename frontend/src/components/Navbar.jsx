@@ -53,18 +53,18 @@ const Navbar = () => {
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1 text-[#245870] font-poppins text-lg font-bold">
-                    <li className="mr-2 hover:text-[#1494ff] ">
+                    <li className="mr-2 hover:text-[#3aa4be] ">
                         <Link >About</Link>
                     </li>
 
-                    <li className="mr-2 hover:text-[#1494ff]">
+                    <li className="mr-2 hover:text-[#3aa4be]">
                         <Link>How it works</Link>
                     </li>
-                    <li className="mr-2 hover:text-[#1494ff]">
+                    <li className="mr-2 hover:text-[#3aa4be]">
                         <Link>Decode Text from Image</Link>
                     </li>
 
-                    <li className="mr-2 hover:text-[#1494ff]">
+                    <li className="mr-2 hover:text-[#3aa4be]">
                         <Link>Decode Image from Image</Link>
                     </li>
                 </ul>
