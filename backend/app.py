@@ -10,7 +10,9 @@ def process_image_route():
         image = request.files['image']
 
         # Pass the image to the model for processing (defined in model.py?)
-        result_image, result_string = process_image(image)
+        output = process_image(image)
+        result_image = output[0]
+        result_string = output[1]
 
         # Return the result to the frontend
         return jsonify({'result_image': result_image, 'result_string': result_string})
