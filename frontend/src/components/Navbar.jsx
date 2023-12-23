@@ -46,13 +46,16 @@ const Navbar = () => {
                         </li>
                     </ul>
                 </div>
-                <Link className="text-2xl font-normal font-poppins flex text-[#23ddee] justify-center items-center ml-[2rem]">
+                <Link className="text-2xl font-normal font-poppins flex text-[#3aa4be] justify-center items-center ml-[2rem]">
                     <img src={Logo} alt="logo" className="w-[3.5rem] h-[3.5rem] mr-[1rem]" />
                     SynapseFace
                 </Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1 text-[#245870] font-poppins text-lg font-bold">
+                    <li className="mr-2 hover:text-[#3aa4be]">
+                        <Link>Home</Link>
+                    </li>
                     <li className="mr-2 hover:text-[#3aa4be] ">
                         <Link >About</Link>
                     </li>
@@ -61,11 +64,7 @@ const Navbar = () => {
                         <Link>How it works</Link>
                     </li>
                     <li className="mr-2 hover:text-[#3aa4be]">
-                        <Link>Decode Text from Image</Link>
-                    </li>
-
-                    <li className="mr-2 hover:text-[#3aa4be]">
-                        <Link>Decode Image from Image</Link>
+                        <Link>Contact us</Link>
                     </li>
                 </ul>
                 <div className="flex">

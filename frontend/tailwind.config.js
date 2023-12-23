@@ -7,7 +7,11 @@ module.exports = {
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
         worksans: ["Work Sans", "sans-serif"],
+        monteserrat: ["Montserrat", "sans-serif"],
       },
+    },
+    backgroundImage: {
+      "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
     },
   },
   plugins: [require("daisyui")],
