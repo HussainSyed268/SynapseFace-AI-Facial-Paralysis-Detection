@@ -9,14 +9,38 @@ const DetectSymmetry = () => {
 
     const [previewUrl, setPreviewUrl] = useState(null); // State for the image preview URL
 
+    const sendFile = async (File) => {
+        const formData = new FormData();
+        formData.append('image', File);
+
+        try {
+            const response = await fetch('http://localhost:5000/process_image', {
+                method: 'POST',
+                body: formData,
+            });
+
+            const data = await response.json();
+            // Process your response data here
+            console.log(data);
+        } catch (error) {
+            console.error('Error uploading image:', error);
+        }
+    }
+
+
     useEffect(() => {
         if (!File) {
             setPreviewUrl(null);
             return;
         }
 
+
+
         const fileUrl = URL.createObjectURL(File);
         setPreviewUrl(fileUrl);
+
+        sendFile(File)
+
 
         return () => {
             URL.revokeObjectURL(fileUrl);
