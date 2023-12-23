@@ -72,14 +72,6 @@ const Navbar = () => {
                     <a className="rounded-full bg-[#3aa4be] text-white font-poppins font-bold w-[6rem] h-[2.5rem] justify-center items-center flex mr-[2rem]">Sign In</a>
                 </div>
             </div>
-            {/* <div className="navbar-end">
-                <ul className="menu menu-horizontal px-1 text-md font-bold hover:text-[#1494ff]">
-                    <li>
-                        <Link>Settings</Link>
-                    </li>
-                </ul>
-                <a className="btn btn-outline btn-info">Sign In</a>
-            </div> */}
         </div>
     );
 };
