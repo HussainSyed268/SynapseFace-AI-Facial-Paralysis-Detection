@@ -54,7 +54,7 @@ const Navbar = () => {
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1 text-[#245870] font-poppins text-lg font-bold">
                     <li className="mr-2 hover:text-[#3aa4be]">
-                        <Link>Home</Link>
+                        <Link to={"/"} >Home</Link>
                     </li>
                     <li className="mr-2 hover:text-[#3aa4be] ">
                         <Link >About</Link>
@@ -68,8 +68,11 @@ const Navbar = () => {
                     </li>
                 </ul>
                 <div className="flex">
-                    <a className="rounded-full bg-[#e1f2f5] text-[#245870] font-poppins font-bold w-[5rem] flex justify-center items-center mx-[2rem]">Start</a>
-                    <a className="rounded-full bg-[#3aa4be] text-white font-poppins font-bold w-[6rem] h-[2.5rem] justify-center items-center flex mr-[2rem]">Sign In</a>
+                    <a href="#" className="rounded-full bg-[#e1f2f5] text-[#245870] font-poppins font-bold w-[5rem] flex justify-center items-center mx-[2rem] hover:bg-[#cfe4e9] active:bg-[#b7d3dc] transition duration-300 ease-in-out">
+                        Start
+                    </a> <a href="#" className="rounded-full bg-[#3aa4be] text-white font-poppins font-bold w-[6rem] h-[2.5rem] justify-center items-center flex mr-[2rem] hover:bg-[#318a96] active:bg-[#2c7c85] transition duration-400 ease-in-out">
+                        Sign In
+                    </a>
                 </div>
             </div>
         </div>

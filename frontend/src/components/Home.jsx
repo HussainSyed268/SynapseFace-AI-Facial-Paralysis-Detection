@@ -6,6 +6,8 @@ import Precise from "../assets/precise.png";
 import Lang from "../assets/lang.png";
 import Learn from "../assets/learn.png"
 
+import { Link } from "react-router-dom";
+
 const Home = () => {
     return (
         <div className="flex flex-col h-full w-screen bg-gradient-radial from-[#62b3bd] to-[#133446]">
@@ -34,8 +36,10 @@ const Home = () => {
                             Harnessing the Power of Artificial Intelligence to Deliver Accurate, Fast, and Non-invasive Facial Paralysis Detection.
                         </h1>
                         <div className="flex flex-col">
-                            <a className="rounded-full bg-white text-[#245870] text-lg font-monteserrat font-bold w-[10rem] h-[3.5rem] flex justify-center items-center my-[1rem]">How it works</a>
-                            <a className="rounded-full bg-[#3aa4be] text-white text-xl font-monteserrat font-bold w-[13rem] h-[3.5rem] justify-center items-center flex ">Get Started</a>
+                            <Link className="rounded-full bg-white text-[#245870] text-lg font-monteserrat font-bold w-[10rem] h-[3.5rem] flex justify-center items-center my-[1rem] hover:bg-[#e2e2e2] active:bg-[#c7c6c6] transition duration-300 ease-in-out">
+                                How it works
+                            </Link>
+                            <Link className="rounded-full bg-[#3aa4be] text-white text-xl font-monteserrat font-bold w-[13rem] h-[3.5rem] justify-center items-center flex  hover:bg-[#318a96] active:bg-[#2c7c85] transition duration-500 ease-in-out cursor-pointer" to={"/detect-symmetry"}>Get Started</Link>
                         </div>
                     </div>
                 </div>
