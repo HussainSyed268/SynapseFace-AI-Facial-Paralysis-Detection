@@ -46,7 +46,7 @@ const Navbar = () => {
                         </li>
                     </ul>
                 </div>
-                <Link className="text-2xl font-normal font-poppins flex text-[#3aa4be] justify-center items-center ml-[2rem]">
+                <Link to={"/"} className="text-2xl font-normal font-poppins flex text-[#3aa4be] justify-center items-center ml-[2rem]">
                     <img src={Logo} alt="logo" className="w-[3.5rem] h-[3.5rem] mr-[1rem]" />
                     SynapseFace
                 </Link>
