@@ -1,39 +1,47 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from model import process_image
+import numpy as np
 from PIL import Image
-from io import BytesIO
+import io
+import cv2
+import base64
 
 app = Flask(__name__)
 CORS(app)
+
 @app.route('/process_image', methods=['POST'])
-
 def process_image_route():
-        # Get the uploaded image from the frontend
-        print("image received by app")
-        image = request.files['image']
-        
-        print("app.py got image")
+    if 'image' not in request.files:
+        return jsonify({'message': 'No image part in the request'}), 400
 
-        # Save the file content to a BytesIO buffer
-        image_buffer = BytesIO()
-        image.save(image_buffer)
-        image_buffer.seek(0)
+    file = request.files['image']
 
-        # Open the image using PIL (Python Imaging Library)
-        pil_image = Image.open(image_buffer)
+    if file.filename == '':
+        return jsonify({'message': 'No image selected for uploading'}), 400
 
-        # Convert the image to JPG format (you can also specify other formats)
-        pil_image = pil_image.convert('RGB')
+    if file:
+        in_memory_file = io.BytesIO()
+        file.save(in_memory_file)
+        data = np.frombuffer(in_memory_file.getvalue(), dtype=np.uint8)
+        color_image_flag = 1
+        image = cv2.imdecode(data, color_image_flag)
 
-        # Pass the image to the model for processing (defined in model.py?)
-        output = process_image(pil_image)
+        output = process_image(image)
         result_image = output[0]
         result_string = output[1]
 
-        # Return the result to the frontend
-        # return jsonify({'result_image': result_image, 'result_string': result_string})
-        return jsonify({"msg": "hello"})
+        # Encode the image to a base64 string
+        _, buffer = cv2.imencode('.jpg', result_image)
+        base64_image = base64.b64encode(buffer).decode('utf-8')
+
+        # Determine the message to send based on result_string
+        message = "Facial paralysis detected" if result_string == 1.0 else "Facial paralysis not detected"
+
+        return jsonify({'image': base64_image, 'message': message}), 200
+
+    else:
+        return jsonify({'message': 'Allowed image types are -> png, jpg, jpeg, gif'}), 400
 
 if __name__ == '__main__':
-        app.run()
+    app.run(port=5001)

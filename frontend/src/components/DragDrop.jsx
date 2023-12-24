@@ -15,7 +15,6 @@ const FileUpload = ({ setPicture }) => {
     const handleDrop = (e) => {
         preventDefaultHandler(e);
         if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-            // Store the first file in tempFile
             setTempFile(e.dataTransfer.files[0]);
         }
         setShouldHighlight(false);
