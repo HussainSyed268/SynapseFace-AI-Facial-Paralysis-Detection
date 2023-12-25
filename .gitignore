@@ -1,2 +1,5 @@
 
 backend/shape_predictor_68_face_landmarks.dat
+backend/.venv/lib/python3.11/site-packages/blinker/__pycache__/_utilities.cpython-311.pyc
+backend/.venv/
+backend/.venv

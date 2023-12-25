@@ -144,20 +144,12 @@ def load_and_predict(img, output):
 
 # for i in range(769,790):
 # img_path = f"images2/{i}.jpg"
-img_path = "backend/845.jpg"
-img = cv2.imread(img_path)
+# img_path = "845.jpg"
+# img = cv2.imread(img_path)
 
 def process_image(img): 
-        print("image receved by model")
-        print(type(img))
-        cv2.imwrite("backend/uploadedImg.jpg", img)
         
         output = []
         output = load_and_predict(img, output)          #output is an array that stores the marked img as the first element and the prediction as the second element
-        cv2.imshow("marked", output[0])
-        cv2.waitKey(0)  # Wait for any key press
-        cv2.destroyAllWindows()    
         print(f"Prediction: {output[1]}")
-
-
-# process_image(img)
+        return output

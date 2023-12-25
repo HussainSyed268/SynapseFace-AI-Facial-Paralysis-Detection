@@ -8,7 +8,7 @@ from sklearn.metrics import accuracy_score, f1_score, confusion_matrix, recall_s
 import joblib
 
 detector = dlib.get_frontal_face_detector()
-predictor_path = 'backend/shape_predictor_68_face_landmarks.dat'  # Replace with the actual path
+predictor_path = 'shape_predictor_68_face_landmarks.dat'  # Replace with the actual path
 predictor = dlib.shape_predictor(predictor_path)
 
 def calculate_angle(point1, point2, point3):
@@ -159,17 +159,17 @@ def train_and_save_models(data_paths, labels):
 
 # Load your dataset, where '1' represents paralyzed and '0' represents not paralyzed
 # Replace with the actual paths and labels of your dataset
-data_paths = [r"C:\Users\mohah\Documents\nust stuff\5th sem\AI\AI Proj\datasets\safvi DS"]
+data_paths = []
 
-for i in range(1, 1969):
+for i in range(1, 2308):
     if (((i >= 693) and (i <= 792)) or (i>=1629) and (i<=1728)):
         continue
     else:
-        data_paths.append(f"images/{i}.jpg")
+        data_paths.append(f"safviDS/{i}.jpg")
 
 d1 = np.zeros(692)
 d2 = np.ones(836)
-d3 = np.zeros(241)
+d3 = np.zeros(579)
 labels = np.concatenate((d1, d2, d3))
 
 # Split the dataset into training and testing sets

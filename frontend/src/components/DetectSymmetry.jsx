@@ -1,32 +1,56 @@
 import React, { useEffect } from "react";
 import DragDrop from "./DragDrop";
+import { ImgComparisonSlider } from '@img-comparison-slider/react';
 import { useState } from "react";
 import Tick from "../assets/correct.png";
 
 const DetectSymmetry = () => {
 
     const [File, setFile] = useState(null);
+    const [receivedImage, setReceivedImage] = useState(null); // State for storing actual image
+    const [message, setMessage] = useState(''); // State for storing status message
+
+    const resetUpload = () => {
+        setFile(null);
+        setReceivedImage(null);
+        setPreviewUrl(null);
+        setMessage('');
+    };
+
 
     const [previewUrl, setPreviewUrl] = useState(null); // State for the image preview URL
 
     const sendFile = async (File) => {
         const formData = new FormData();
+<<<<<<< HEAD
         const uploaded = URL.createObjectURL(File);
         formData.append('image', uploaded);
         console.log(formData)
+=======
+        formData.append('image', File);
+>>>>>>> 5c977b59e849063ec43329885487ea1aa7bd541e
 
         try {
-            const response = await fetch('http://localhost:5000/process_image', {
+            const response = await fetch('http://localhost:5001/process_image', {
                 method: 'POST',
                 body: formData,
             });
 
             const data = await response.json();
             // Process your response data here
-            console.log(data);
+
+            if (data.image) {
+                setReceivedImage(`data:image/jpeg;base64,${data.image}`);
+            }
+
+            if (data.message) {
+                setMessage(data.message);
+            }
+
         } catch (error) {
             console.error('Error uploading image:', error);
         }
+
     }
 
 
@@ -50,9 +74,10 @@ const DetectSymmetry = () => {
     }, [File]);
 
     return (
+
         <div className="flex flex-col h-full w-full py-10 px-10 items-center">
             <div className="flex justify-center">
-                <h1 className="text-5xl font-monteserrat font-semibold text-[#245870] mt-[2rem]">Detect Facial Paralysis</h1>
+                <h1 className="text-5xl font-monteserrat font-semibold text-[#245870] mt-[2rem] drop-shadow-md">Detect Facial Paralysis</h1>
             </div>
             <div className="flex flex-col h-full w-full items-center">
                 {!File ? (
@@ -81,15 +106,33 @@ const DetectSymmetry = () => {
 
                         </div>
                     </>) : (
-                    <div className="flex justify-center items-center mt-4">
-                        {previewUrl && (
-                            <img src={previewUrl} alt="Uploaded" className="w-[70%] h-[20rem] object-cover" />
-                        )}
+                    <div div className="flex justify-center items-center mt-4 flex-col max-h-[40rem]">
+                        {receivedImage &&
+                            <ImgComparisonSlider className="border-8 border-[#245870] rounded-md" >
+                                <img slot="first" src={previewUrl} className="h-[35rem]" />
+                                <img slot="second" src={receivedImage} className="h-[35rem]" />
+                            </ImgComparisonSlider>
+                        }
+                        {message &&
+                            <div >
+
+                                <div className="rounded-full mt-[2rem] bg-[#3aa4be] text-white text-2xl py-[1.5rem] font-poppins font-bold px-[2rem] h-[2.5rem] justify-center items-center flex drop-shadow-lg ">
+                                    {message}
+
+
+                                </div>
+                                <button onClick={resetUpload} className="rounded-full bg-[#245870] text-white text-lg py-2 px-4 mt-4 hover:bg-[#1b4153] transition duration-300 ease-in-out absolute bottom-[2rem] left-[87vw]">
+                                    Upload Another
+                                </button>
+                            </div>
+
+                        }
+
                     </div>
                 )}
 
             </div>
-        </div>
+        </div >
     );
 };
 export default DetectSymmetry;
