@@ -13,6 +13,7 @@ const DetectSymmetry = () => {
         const formData = new FormData();
         const uploaded = URL.createObjectURL(File);
         formData.append('image', uploaded);
+        console.log(formData)
 
         try {
             const response = await fetch('http://localhost:5000/process_image', {

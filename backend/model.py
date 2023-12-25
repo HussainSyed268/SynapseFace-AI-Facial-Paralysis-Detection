@@ -4,8 +4,8 @@ import dlib
 import cv2
 
 detector = dlib.get_frontal_face_detector()
-predictor_path = 'shape_predictor_68_face_landmarks.dat'  # Replace with the actual path
-# predictor_path = 'backend\shape_predictor_68_face_landmarks.dat'  # Replace with the actual path
+# predictor_path = 'shape_predictor_68_face_landmarks.dat'  # Replace with the actual path
+predictor_path = 'backend\shape_predictor_68_face_landmarks.dat'  # Replace with the actual path
 predictor = dlib.shape_predictor(predictor_path)
 
 def calculate_angle(point1, point2, point3):
@@ -130,8 +130,8 @@ def mark_landmarks(img, landmarks):
 
 def load_and_predict(img, output):
     # Load the trained model
-    log_model = joblib.load('voting_classifier.joblib')
-#     log_model = joblib.load('backend/voting_classifier.joblib')
+#     log_model = joblib.load('voting_classifier.joblib')
+    log_model = joblib.load('backend/voting_classifier.joblib')
 
     # Extract features from the image
     features = extract_features(img, output)
