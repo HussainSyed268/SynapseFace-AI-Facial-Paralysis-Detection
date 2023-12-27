@@ -102,7 +102,7 @@ def resize_image(img, width=500, height=None):
 
 def extract_features(img, output):
 
-    img = resize_image(img)  # Resize the image to speed up processing
+    # img = resize_image(img)  # Resize the image to speed up processing
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     faces = detector(gray)
