@@ -5,7 +5,6 @@ import cv2
 
 detector = dlib.get_frontal_face_detector()
 predictor_path = 'shape_predictor_68_face_landmarks.dat'  # Replace with the actual path
-# predictor_path = 'backend\shape_predictor_68_face_landmarks.dat'  # Replace with the actual path
 predictor = dlib.shape_predictor(predictor_path)
 
 def calculate_angle(point1, point2, point3):
@@ -33,7 +32,6 @@ def calculate_max_ratio(value1, value2):
 
 def calculate_distance(point1, point2):
     return np.linalg.norm(point1 - point2)
-
 def process_landmarks(landmarks):
     # Extract the x, y coordinates of the 51 key points
     key_points = np.array([(landmarks.part(i).x, landmarks.part(i).y) for i in range(68)])
@@ -87,7 +85,78 @@ def process_landmarks(landmarks):
         calculate_distance(key_points[46], key_points[23]) / calculate_distance(key_points[43], key_points[23]),  # f27
         calculate_distance(key_points[51], key_points[23]) / calculate_distance(key_points[48], key_points[23]),  # f28
     ]
+
     return features[:28]  # Keep only the first 28 elements
+
+
+def extract_features(img):
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    # new_width = 600
+    # new_height = 600
+    # gray = cv2.resize(gray, (new_width, new_height))
+    faces = detector(gray)
+
+    features = np.zeros(28)  # Initialize features with zeros
+
+    if faces:  # Check if faces are detected
+        landmarks = predictor(gray, faces[0])  # Process only the first detected face
+
+        marked_img = mark_landmarks(img, landmarks)
+        features = process_landmarks(landmarks)
+          
+
+    return features
+def mark_landmarks(img, landmarks):
+    marked_img = img.copy()
+
+    # Loop through each landmark and mark it on the image
+    for point in landmarks.parts():
+        x, y = point.x, point.y
+        cv2.circle(marked_img, (x, y), 3, (0, 255, 0), -1)  # Mark the landmark with a green circle
+
+    return marked_img
+
+def load_and_predict(img):
+    # Load the trained model
+    svm_model = joblib.load('voting_classifier.joblib')
+
+    # Extract features from the image
+    features = extract_features(img)
+
+    # Make a prediction using the trained model
+    prediction = svm_model.predict([features])
+
+    return prediction[0]
+
+# for i in range(1,24):
+#   img_path = f"test/{i}.jpg"
+#   img = cv2.imread(img_path)
+#   print(i)
+#   prediction = load_and_predict(img)
+#   print(f"Prediction: {prediction}")   
+
+def apply_clahe(image, clip_limit=2.0, tile_grid_size=(8, 8)):
+    lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
+    l, a, b = cv2.split(lab)
+
+    # Apply CLAHE to the L-channel
+    clahe = cv2.createCLAHE(clipLimit=clip_limit, tileGridSize=tile_grid_size)
+    l_clahe = clahe.apply(l)
+
+    # Merge the CLAHE-enhanced L-channel with the original A and B channels
+    lab_clahe = cv2.merge((l_clahe, a, b))
+
+    # Convert LAB back to BGR
+    result = cv2.cvtColor(lab_clahe, cv2.COLOR_LAB2BGR)
+
+    return result
+   
+def return_prediction(img): 
+        
+        
+        output = load_and_predict(img)          #output is an array that stores the marked img as the first element and the prediction as the second element
+
+        return output
 
 def resize_image(img, width=500, height=None):
     if height is None:
@@ -100,56 +169,22 @@ def resize_image(img, width=500, height=None):
     resized = cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
     return resized
 
-def extract_features(img, output):
-
-    img = resize_image(img)  # Resize the image to speed up processing
-
+def return_img(img):
+    img = resize_image(img)
+    print(img.shape)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     faces = detector(gray)
 
-    features = np.zeros(28)  # Initialize features with zeros
-
     if faces:  # Check if faces are detected
+
         landmarks = predictor(gray, faces[0])  # Process only the first detected face
-        marked_img = mark_landmarks(img, landmarks)
-        features = process_landmarks(landmarks)
-        # cv2.imshow("marked",marked_img)
-        output.append(marked_img)                       #storing the marked image
 
-    return features
-
-def mark_landmarks(img, landmarks):
-    marked_img = img.copy()
-
-    # Loop through each landmark and mark it on the image
-    for point in landmarks.parts():
-        x, y = point.x, point.y
-        cv2.circle(marked_img, (x, y), 3, (0, 255, 0), -1)  # Mark the landmark with a green circle
-
+    marked_img = mark_landmarks(img, landmarks) 
     return marked_img
 
-def load_and_predict(img, output):
-    # Load the trained model
-    log_model = joblib.load('voting_classifier.joblib')
-#     log_model = joblib.load('backend/voting_classifier.joblib')
+def process_image(img):
+    prediction  =  return_prediction(img)
+    img = return_img(img)
 
-    # Extract features from the image
-    features = extract_features(img, output)
+    return [img,prediction]
 
-    # Make a prediction using the trained model
-    prediction = log_model.predict([features])
-    output.append(prediction[0])                                #storing the prediction
-
-    return output
-
-# for i in range(769,790):
-# img_path = f"images2/{i}.jpg"
-# img_path = "845.jpg"
-# img = cv2.imread(img_path)
-
-def process_image(img): 
-        
-        output = []
-        output = load_and_predict(img, output)          #output is an array that stores the marked img as the first element and the prediction as the second element
-
-        return output
