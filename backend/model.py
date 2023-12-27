@@ -4,8 +4,8 @@ import dlib
 import cv2
 
 detector = dlib.get_frontal_face_detector()
-# predictor_path = 'shape_predictor_68_face_landmarks.dat'  # Replace with the actual path
-predictor_path = 'backend\shape_predictor_68_face_landmarks.dat'  # Replace with the actual path
+predictor_path = 'shape_predictor_68_face_landmarks.dat'  # Replace with the actual path
+# predictor_path = 'backend\shape_predictor_68_face_landmarks.dat'  # Replace with the actual path
 predictor = dlib.shape_predictor(predictor_path)
 
 def calculate_angle(point1, point2, point3):
@@ -130,8 +130,8 @@ def mark_landmarks(img, landmarks):
 
 def load_and_predict(img, output):
     # Load the trained model
-#     log_model = joblib.load('voting_classifier.joblib')
-    log_model = joblib.load('backend/voting_classifier.joblib')
+    log_model = joblib.load('voting_classifier.joblib')
+#     log_model = joblib.load('backend/voting_classifier.joblib')
 
     # Extract features from the image
     features = extract_features(img, output)
@@ -151,5 +151,5 @@ def process_image(img):
         
         output = []
         output = load_and_predict(img, output)          #output is an array that stores the marked img as the first element and the prediction as the second element
-        print(f"Prediction: {output[1]}")
+
         return output
